@@ -1,0 +1,10 @@
+node_modules
+src
+sdk
+mcp
+integrations
+site
+*.md
+.claude
+.git
+tsconfig.json

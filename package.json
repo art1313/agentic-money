@@ -1,0 +1,42 @@
+{
+  "name": "agentic-money",
+  "version": "0.1.0",
+  "description": "Money for AI agents — Bitcoin for savings, stablecoins for spending",
+  "type": "module",
+  "bin": {
+    "agm": "./bin/agm.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js serve"
+  },
+  "keywords": [
+    "bitcoin",
+    "ai",
+    "agents",
+    "stablecoins",
+    "money"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@hono/node-server": "^2.0.4",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.4",
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.7",
+    "commander": "^13.1.0",
+    "ecpair": "^3.0.0-rc.0",
+    "ed25519-hd-key": "^2.0.0",
+    "ethers": "^6.13.5",
+    "hono": "^4.12.25",
+    "tiny-secp256k1": "^2.2.3",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

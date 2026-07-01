@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Money — Money for AI Agents</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e5e5e5;
+      --accent: #f7931a;
+      --accent2: #2775ca;
+      --muted: #888;
+      --code-bg: #161616;
+      --border: #222;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    nav .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    nav .logo span { color: var(--accent); }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { color: var(--muted); font-size: 0.9rem; }
+    nav .links a:hover { color: var(--fg); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .btc { color: var(--accent); }
+    .hero h1 .stable { color: var(--accent2); }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .hero .stat {
+      display: inline-block;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .hero .stat strong { color: var(--accent); }
+
+    /* Install */
+    .install {
+      text-align: center;
+      padding: 2rem;
+    }
+    .install code {
+      display: inline-block;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .install code .dollar { color: var(--muted); }
+
+    /* Tiers */
+    .tiers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .tier {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .tier h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .tier.savings { border-top: 3px solid var(--accent); }
+    .tier.spending { border-top: 3px solid var(--accent2); }
+    .tier .asset {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0.5rem 0;
+    }
+    .tier.savings .asset { color: var(--accent); }
+    .tier.spending .asset { color: var(--accent2); }
+    .tier p { color: var(--muted); font-size: 0.95rem; }
+    .tier .chains {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Code examples */
+    .examples {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .examples h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+    .tab {
+      padding: 0.6rem 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .tab.active {
+      background: var(--code-bg);
+      color: var(--fg);
+    }
+    .code-block {
+      display: none;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 0 8px 8px 8px;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    .code-block.active { display: block; }
+    .code-block pre {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+    .code-block .comment { color: #666; }
+    .code-block .string { color: #a5d6a7; }
+    .code-block .keyword { color: #ce93d8; }
+    .code-block .fn { color: #90caf9; }
+
+    /* Competitive */
+    .competitive {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+    .competitive h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .competitive p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .grid-chart {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      text-align: left;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .grid-chart .us { color: var(--accent); font-weight: 700; }
+    .grid-chart .them { color: var(--muted); }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .cta p { color: var(--muted); margin-bottom: 2rem; }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin: 0.5rem;
+    }
+    .btn:hover { text-decoration: none; opacity: 0.9; }
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      max-width: 1200px;
+      margin: 2rem auto 0;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .tiers { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">agm<span>.</span></div>
+    <div class="links">
+      <a href="#tiers">Model</a>
+      <a href="#examples">Code</a>
+      <a href="https://github.com/bina/agentic-money">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>
+      <span class="btc">Bitcoin</span> for savings.<br>
+      <span class="stable">Stablecoins</span> for spending.<br>
+      Built for AI agents.
+    </h1>
+    <p>
+      The only wallet that implements what AI models actually want:
+      a two-tier monetary system with Bitcoin as store of value and stablecoins for payments.
+    </p>
+    <div>
+      <span class="stat"><strong>79.1%</strong> of AI models chose Bitcoin for savings</span>
+      <span class="stat"><strong>53.2%</strong> chose stablecoins for payments</span>
+      <span class="stat"><strong>0%</strong> chose fiat for any function</span>
+    </div>
+  </section>
+
+  <section class="install">
+    <code><span class="dollar">$ </span>npm install -g agentic-money</code>
+  </section>
+
+  <section class="tiers" id="tiers">
+    <div class="tier savings">
+      <h3>Savings Tier</h3>
+      <div class="asset">Bitcoin</div>
+      <p>Store of value. HD wallets with BIP84 native segwit. Your agent's long-term treasury.</p>
+      <div class="chains">Chain: Bitcoin L1</div>
+    </div>
+    <div class="tier spending">
+      <h3>Spending Tier</h3>
+      <div class="asset">USDC &middot; USDT</div>
+      <p>Medium of exchange. Fast, cheap payments for agent-to-agent and agent-to-human transactions.</p>
+      <div class="chains">Chains: Solana, Base</div>
+    </div>
+  </section>
+
+  <section class="examples" id="examples">
+    <h2>Three lines to give your agent a wallet</h2>
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('cli')">CLI</div>
+      <div class="tab" onclick="showTab('ts')">TypeScript</div>
+      <div class="tab" onclick="showTab('py')">Python</div>
+      <div class="tab" onclick="showTab('curl')">API</div>
+    </div>
+    <div class="code-block active" id="tab-cli">
+<pre><span class="comment"># Create a Bitcoin savings wallet</span>
+<span class="fn">agm</span> wallet create --asset bitcoin --network testnet
+
+<span class="comment"># Create a USDC spending wallet on Solana</span>
+<span class="fn">agm</span> wallet create --asset usdc --chain solana
+
+<span class="comment"># Check balances</span>
+<span class="fn">agm</span> balance</pre>
+    </div>
+    <div class="code-block" id="tab-ts">
+<pre><span class="keyword">import</span> { AgenticMoney } <span class="keyword">from</span> <span class="string">'@agentic-money/sdk'</span>;
+
+<span class="keyword">const</span> agm = <span class="keyword">new</span> <span class="fn">AgenticMoney</span>({ apiKey: <span class="string">'agm_yourkey'</span> });
+
+<span class="keyword">const</span> savings = <span class="keyword">await</span> agm.<span class="fn">createWallet</span>({ asset: <span class="string">'bitcoin'</span> });
+<span class="keyword">const</span> spending = <span class="keyword">await</span> agm.<span class="fn">createWallet</span>({ asset: <span class="string">'usdc'</span>, chain: <span class="string">'solana'</span> });
+<span class="keyword">const</span> balance = <span class="keyword">await</span> agm.<span class="fn">getBalance</span>(savings.id);</pre>
+    </div>
+    <div class="code-block" id="tab-py">
+<pre><span class="keyword">from</span> agentic_money <span class="keyword">import</span> AgenticMoney
+
+agm = <span class="fn">AgenticMoney</span>(<span class="string">"agm_yourkey"</span>)
+
+savings = agm.<span class="fn">create_wallet</span>(asset=<span class="string">"bitcoin"</span>)
+spending = agm.<span class="fn">create_wallet</span>(asset=<span class="string">"usdc"</span>, chain=<span class="string">"solana"</span>)
+balance = agm.<span class="fn">get_balance</span>(savings[<span class="string">"id"</span>])</pre>
+    </div>
+    <div class="code-block" id="tab-curl">
+<pre><span class="comment"># Create wallet via API</span>
+curl -X POST http://localhost:3141/v1/wallets \
+  -H <span class="string">"X-API-Key: agm_yourkey"</span> \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{"asset":"usdc","chain":"solana"}'</span>
+
+<span class="comment"># Check balance</span>
+curl http://localhost:3141/v1/wallets/abc123/balance \
+  -H <span class="string">"X-API-Key: agm_yourkey"</span></pre>
+    </div>
+  </section>
+
+  <section class="competitive">
+    <h2>The only player in the top-right quadrant</h2>
+    <p>Everyone else is either Bitcoin-only or stablecoin-only. Nobody combines both for agents.</p>
+    <div class="grid-chart">
+                    Bitcoin Support
+                         |
+        Nunchuk <span class="them">*</span>        |        <span class="us">* AGENTIC MONEY</span>
+        Lightning Labs <span class="them">*</span> |          <span class="us">(only player here)</span>
+                         |
+  ----------------------+----------------------- Agent-First
+                         |
+                         |        Coinbase AgentKit <span class="them">*</span>
+        Tether Wallet <span class="them">*</span>  |        Skyfire <span class="them">*</span>
+                         |        Circle Agent Stack <span class="them">*</span>
+                   Stablecoin Only</div>
+  </section>
+
+  <section class="cta">
+    <h2>Give your agents money</h2>
+    <p>CLI, REST API, TypeScript SDK, Python SDK, MCP server, and LangChain tools. Ship in minutes.</p>
+    <a href="https://github.com/bina/agentic-money" class="btn">Get Started</a>
+    <a href="https://github.com/bina/agentic-money#rest-api" class="btn secondary">API Docs</a>
+  </section>
+
+  <footer>
+    Agentic Money &middot; MIT License &middot; Built by <a href="https://bina.money">Bina</a>
+    <br>
+    Based on <a href="https://www.btcpolicy.org/articles/study-ai-models-overwhelmingly-prefer-bitcoin-and-digital-native-money-over-traditional-fiat">BTC Policy Institute research</a>
+  </footer>
+
+  <script>
+    function showTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

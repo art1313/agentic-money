@@ -1,0 +1,21 @@
+{
+  "name": "@agentic-money/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Agentic Money — let Claude manage crypto wallets",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "agm-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "@types/node": "^22.13.10"
+  }
+}
